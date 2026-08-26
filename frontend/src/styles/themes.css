@@ -1,0 +1,100 @@
+/* ==========================================================================
+   Wishverse V1 - Theme Engine System
+   ========================================================================== */
+
+/* Default Theme / Magical Starlight */
+:root,
+[data-theme="magical-starlight"] {
+  --theme-bg-gradient: radial-gradient(circle at 50% 20%, #2e1065 0%, #1e0938 45%, #0d0417 100%);
+  --theme-card-bg: rgba(30, 10, 50, 0.72);
+  --theme-card-border: rgba(192, 132, 252, 0.28);
+  --theme-accent: #c084fc;
+  --theme-accent-glow: rgba(192, 132, 252, 0.45);
+  --theme-accent-light: #f3e8ff;
+  --theme-text-primary: #ffffff;
+  --theme-text-secondary: #e9d5ff;
+  --theme-tag-bg: rgba(192, 132, 252, 0.15);
+  --theme-tag-text: #e9d5ff;
+  --theme-btn-gradient: linear-gradient(135deg, #9333ea 0%, #c084fc 100%);
+  --theme-envelope-bg: linear-gradient(145deg, #3b0764, #581c87);
+}
+
+/* Sunset Glow */
+[data-theme="sunset-glow"] {
+  --theme-bg-gradient: radial-gradient(circle at 50% 20%, #7c2d12 0%, #431407 45%, #180503 100%);
+  --theme-card-bg: rgba(67, 20, 7, 0.72);
+  --theme-card-border: rgba(251, 146, 60, 0.3);
+  --theme-accent: #fb923c;
+  --theme-accent-glow: rgba(251, 146, 60, 0.45);
+  --theme-accent-light: #ffedd5;
+  --theme-text-primary: #ffffff;
+  --theme-text-secondary: #fed7aa;
+  --theme-tag-bg: rgba(251, 146, 60, 0.15);
+  --theme-tag-text: #fed7aa;
+  --theme-btn-gradient: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #facc15 100%);
+  --theme-envelope-bg: linear-gradient(145deg, #7c2d12, #c2410c);
+}
+
+/* Neon Cyberpunk */
+[data-theme="neon-cyberpunk"] {
+  --theme-bg-gradient: radial-gradient(circle at 50% 20%, #0369a1 0%, #082f49 45%, #050b14 100%);
+  --theme-card-bg: rgba(8, 47, 73, 0.75);
+  --theme-card-border: rgba(56, 189, 248, 0.35);
+  --theme-accent: #38bdf8;
+  --theme-accent-glow: rgba(56, 189, 248, 0.5);
+  --theme-accent-light: #e0f2fe;
+  --theme-text-primary: #ffffff;
+  --theme-text-secondary: #bae6fd;
+  --theme-tag-bg: rgba(56, 189, 248, 0.15);
+  --theme-tag-text: #38bdf8;
+  --theme-btn-gradient: linear-gradient(135deg, #0284c7 0%, #38bdf8 50%, #d946ef 100%);
+  --theme-envelope-bg: linear-gradient(145deg, #075985, #0284c7);
+}
+
+/* Romantic Blossom */
+[data-theme="romantic-blossom"] {
+  --theme-bg-gradient: radial-gradient(circle at 50% 20%, #831843 0%, #500724 45%, #18020b 100%);
+  --theme-card-bg: rgba(80, 7, 36, 0.72);
+  --theme-card-border: rgba(251, 113, 133, 0.3);
+  --theme-accent: #fb7185;
+  --theme-accent-glow: rgba(251, 113, 133, 0.45);
+  --theme-accent-light: #ffe4e6;
+  --theme-text-primary: #ffffff;
+  --theme-text-secondary: #fecdd3;
+  --theme-tag-bg: rgba(251, 113, 133, 0.15);
+  --theme-tag-text: #fecdd3;
+  --theme-btn-gradient: linear-gradient(135deg, #e11d48 0%, #fb7185 100%);
+  --theme-envelope-bg: linear-gradient(145deg, #831843, #be123c);
+}
+
+/* Golden Elegance */
+[data-theme="golden-elegance"] {
+  --theme-bg-gradient: radial-gradient(circle at 50% 20%, #2e2609 0%, #171203 45%, #080601 100%);
+  --theme-card-bg: rgba(28, 23, 5, 0.78);
+  --theme-card-border: rgba(250, 204, 21, 0.35);
+  --theme-accent: #facc15;
+  --theme-accent-glow: rgba(250, 204, 21, 0.45);
+  --theme-accent-light: #fef08a;
+  --theme-text-primary: #ffffff;
+  --theme-text-secondary: #fde047;
+  --theme-tag-bg: rgba(250, 204, 21, 0.15);
+  --theme-tag-text: #fde047;
+  --theme-btn-gradient: linear-gradient(135deg, #ca8a04 0%, #facc15 100%);
+  --theme-envelope-bg: linear-gradient(145deg, #422006, #854d0e);
+}
+
+/* Celestial Dream */
+[data-theme="celestial-dream"] {
+  --theme-bg-gradient: radial-gradient(circle at 50% 20%, #064e3b 0%, #022c22 45%, #01130e 100%);
+  --theme-card-bg: rgba(2, 44, 34, 0.75);
+  --theme-card-border: rgba(45, 212, 191, 0.32);
+  --theme-accent: #2dd4bf;
+  --theme-accent-glow: rgba(45, 212, 191, 0.45);
+  --theme-accent-light: #ccfbf1;
+  --theme-text-primary: #ffffff;
+  --theme-text-secondary: #99f6e4;
+  --theme-tag-bg: rgba(45, 212, 191, 0.15);
+  --theme-tag-text: #99f6e4;
+  --theme-btn-gradient: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);
+  --theme-envelope-bg: linear-gradient(145deg, #064e3b, #0f766e);
+}

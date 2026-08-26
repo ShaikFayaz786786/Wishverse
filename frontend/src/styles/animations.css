@@ -1,0 +1,176 @@
+/* ==========================================================================
+   Wishverse V1 - Visual Animations System
+   ========================================================================== */
+
+/* Background floating particles container */
+.animation-particles-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.particle-item {
+  position: absolute;
+  user-select: none;
+  will-change: transform, opacity;
+}
+
+/* Floating Sparkles */
+@keyframes floatSparkle {
+  0% {
+    transform: translateY(105vh) rotate(0deg) scale(0.6);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.9;
+  }
+  80% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-10vh) rotate(360deg) scale(1.1);
+    opacity: 0;
+  }
+}
+
+.particle-sparkle {
+  animation: floatSparkle 8s linear infinite;
+  color: var(--theme-accent, #c084fc);
+  filter: drop-shadow(0 0 8px var(--theme-accent-glow, rgba(192, 132, 252, 0.6)));
+}
+
+/* Gentle Rising Hearts */
+@keyframes riseHeart {
+  0% {
+    transform: translateY(105vh) translateX(0) scale(0.6);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.85;
+    transform: translateY(75vh) translateX(15px) scale(0.85);
+  }
+  50% {
+    transform: translateY(45vh) translateX(-15px) scale(1);
+  }
+  75% {
+    opacity: 0.85;
+    transform: translateY(15vh) translateX(15px) scale(1.1);
+  }
+  100% {
+    transform: translateY(-10vh) translateX(0) scale(0.9);
+    opacity: 0;
+  }
+}
+
+.particle-heart {
+  animation: riseHeart 9s ease-in-out infinite;
+  color: var(--theme-accent, #fb7185);
+  filter: drop-shadow(0 0 10px var(--theme-accent-glow, rgba(251, 113, 133, 0.6)));
+}
+
+/* Floating Balloons */
+@keyframes swayBalloon {
+  0% {
+    transform: translateY(110vh) rotate(-4deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.95;
+  }
+  50% {
+    transform: translateY(50vh) rotate(4deg);
+  }
+  85% {
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(-15vh) rotate(-4deg);
+    opacity: 0;
+  }
+}
+
+.particle-balloon {
+  animation: swayBalloon 12s ease-in-out infinite;
+}
+
+/* Cosmic Fireworks Flash */
+@keyframes fireworkBurst {
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 20px #fff);
+  }
+  70% {
+    opacity: 0.8;
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.particle-firework {
+  animation: fireworkBurst 3.5s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
+}
+
+/* Pulsing Glow Ambient */
+@keyframes ambientPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.15);
+  }
+}
+
+.ambient-glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: ambientPulse 8s ease-in-out infinite;
+  background: var(--theme-accent-glow, rgba(192, 132, 252, 0.35));
+}
+
+/* Envelope / Gift Card Unwrap Animation */
+@keyframes unwrapReveal {
+  0% {
+    transform: scale(0.9) translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.reveal-card-anim {
+  animation: unwrapReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Glow Shimmer */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, #fff 0%, var(--theme-accent, #c084fc) 50%, #fff 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}

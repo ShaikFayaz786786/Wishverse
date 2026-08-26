@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: wishverse
+    env: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        value: sqlite:///./wishverse.db
+      - key: BACKEND_CORS_ORIGINS
+        value: "*"
