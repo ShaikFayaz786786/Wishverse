@@ -1,4 +1,5 @@
 import io
+from app.services.storage import storage_service
 
 
 def test_upload_valid_media(client, auth_user_a):
@@ -32,6 +33,8 @@ def test_upload_valid_media(client, auth_user_a):
     assert media["wish_id"] == wish_id
     assert "url" in media
     media_id = media["id"]
+    stored_path = storage_service.upload_dir / media["url"].removeprefix("/uploads/")
+    assert stored_path.is_file()
 
     # Verify wish now contains this media
     wish_res = client.get(f"/api/wishes/{wish_id}", headers=auth_user_a["headers"])
@@ -41,6 +44,7 @@ def test_upload_valid_media(client, auth_user_a):
     # Delete media
     del_res = client.delete(f"/api/wishes/media/{media_id}", headers=auth_user_a["headers"])
     assert del_res.status_code == 200
+    assert not stored_path.exists()
 
     # Verify media is removed from wish
     wish_res2 = client.get(f"/api/wishes/{wish_id}", headers=auth_user_a["headers"])

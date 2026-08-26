@@ -35,7 +35,10 @@ MAX_FILE_BYTES = settings.MAX_UPLOAD_SIZE_MB * 1024 * 1024
 
 class StorageService:
     def __init__(self):
-        self.upload_dir = Path(settings.UPLOAD_DIR)
+        # Resolve this once so all later containment checks compare absolute paths.
+        # Media records store absolute paths, and comparing those against a relative
+        # upload directory would otherwise prevent legitimate cleanup.
+        self.upload_dir = Path(settings.UPLOAD_DIR).resolve()
         self.upload_dir.mkdir(parents=True, exist_ok=True)
 
     async def save_media(self, file: UploadFile, wish_id: str) -> Tuple[str, str, str, str, int]:
@@ -93,8 +96,8 @@ class StorageService:
     def delete_media(self, storage_path: str) -> bool:
         """Deletes a local file safely."""
         try:
-            target = Path(storage_path)
-            # Basic path traversal protection: verify file is within upload_dir
+            target = Path(storage_path).resolve()
+            # Path traversal protection: only delete files owned by this storage.
             if target.is_relative_to(self.upload_dir) and target.is_file():
                 target.unlink(missing_ok=True)
                 return True

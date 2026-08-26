@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional, List
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from app.schemas.media import MediaResponse
 
 
@@ -13,6 +13,16 @@ class WishCreate(BaseModel):
     theme: str = Field(default="magical-starlight", max_length=100)
     animation_preset: str = Field(default="floating-sparkles", max_length=100)
 
+    @field_validator(
+        "title", "recipient_name", "sender_name", "message",
+        "occasion", "theme", "animation_preset",
+    )
+    @classmethod
+    def reject_blank_text(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("This field cannot be blank.")
+        return value
+
 
 class WishUpdate(BaseModel):
     title: Optional[str] = Field(None, min_length=1, max_length=255)
@@ -22,6 +32,16 @@ class WishUpdate(BaseModel):
     occasion: Optional[str] = Field(None, max_length=100)
     theme: Optional[str] = Field(None, max_length=100)
     animation_preset: Optional[str] = Field(None, max_length=100)
+
+    @field_validator(
+        "title", "recipient_name", "sender_name", "message",
+        "occasion", "theme", "animation_preset",
+    )
+    @classmethod
+    def reject_blank_text(cls, value: Optional[str]) -> Optional[str]:
+        if value is not None and not value.strip():
+            raise ValueError("This field cannot be blank.")
+        return value
 
 
 class WishResponse(BaseModel):

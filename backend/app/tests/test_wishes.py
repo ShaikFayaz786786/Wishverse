@@ -115,3 +115,18 @@ def test_ownership_protection(client, auth_user_a, auth_user_b):
     # User A can delete their own wish
     own_del = client.delete(f"/api/wishes/{wish_id}", headers=auth_user_a["headers"])
     assert own_del.status_code == 200
+
+
+def test_wish_rejects_whitespace_only_required_text(client, auth_user_a):
+    response = client.post(
+        "/api/wishes",
+        json={
+            "title": "   ",
+            "recipient_name": "Friend",
+            "sender_name": "Me",
+            "message": "Hello",
+        },
+        headers=auth_user_a["headers"],
+    )
+
+    assert response.status_code == 422
