@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Sparkles, Lock, Mail, AlertCircle, ArrowRight } from 'lucide-react'
+import { Sparkles, Lock, Mail, AlertCircle, ArrowRight, Eye, EyeOff } from 'lucide-react'
 
 export const LoginPage: React.FC = () => {
   const { login } = useAuth()
@@ -10,6 +10,7 @@ export const LoginPage: React.FC = () => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -81,15 +82,24 @@ export const LoginPage: React.FC = () => {
             <div style={{ position: 'relative' }}>
               <input
                 id="login-password"
-                type="password"
+                type={isPasswordVisible ? 'text' : 'password'}
                 required
                 className="form-input"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                style={{ paddingLeft: '2.5rem' }}
+                style={{ paddingLeft: '2.5rem', paddingRight: '2.75rem' }}
               />
               <Lock size={16} className="input-icon" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setIsPasswordVisible((visible) => !visible)}
+                aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
+                aria-pressed={isPasswordVisible}
+              >
+                {isPasswordVisible ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
           </div>
 
