@@ -35,27 +35,16 @@ export const LoginPage: React.FC = () => {
   }
 
   return (
-    <div style={{ maxWidth: '440px', margin: '3rem auto', padding: '0 1rem' }}>
-      <div className="glass-card" style={{ padding: '2.5rem 2rem' }}>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div
-            style={{
-              width: '48px',
-              height: '48px',
-              borderRadius: '14px',
-              background: 'var(--primary-gradient)',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#fff',
-              marginBottom: '1rem',
-              boxShadow: '0 0 20px var(--primary-glow)',
-            }}
-          >
+    <section className="auth-page">
+      <div className="auth-glow auth-glow-one" aria-hidden="true" />
+      <div className="auth-glow auth-glow-two" aria-hidden="true" />
+      <div className="auth-card glass-card">
+        <div className="auth-heading">
+          <div className="auth-icon">
             <Sparkles size={24} />
           </div>
           <h1 style={{ fontSize: '1.8rem', marginBottom: '0.4rem' }}>Welcome Back</h1>
-          <p style={{ color: '#94a3b8', fontSize: '0.92rem' }}>Sign in to manage and create your wishes</p>
+          <p>Sign in to manage and create your wishes</p>
         </div>
 
         {error && (
@@ -81,7 +70,7 @@ export const LoginPage: React.FC = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 style={{ paddingLeft: '2.5rem' }}
               />
-              <Mail size={16} color="#94a3b8" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+              <Mail size={16} className="input-icon" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
             </div>
           </div>
 
@@ -100,7 +89,7 @@ export const LoginPage: React.FC = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 style={{ paddingLeft: '2.5rem' }}
               />
-              <Lock size={16} color="#94a3b8" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+              <Lock size={16} className="input-icon" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
             </div>
           </div>
 
@@ -115,13 +104,13 @@ export const LoginPage: React.FC = () => {
           </button>
         </form>
 
-        <div style={{ textAlign: 'center', marginTop: '1.75rem', fontSize: '0.88rem', color: '#94a3b8' }}>
+        <div className="auth-footer">
           Don't have an account?{' '}
-          <Link to="/signup" style={{ color: '#c084fc', fontWeight: 600 }}>
+          <Link to="/signup">
             Sign up free
           </Link>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

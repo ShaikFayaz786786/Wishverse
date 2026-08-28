@@ -36,7 +36,7 @@ export const Navbar: React.FC = () => {
               </Link>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginLeft: '0.5rem' }}>
-                <span className="user-name" style={{ fontSize: '0.88rem', color: '#e2e8f0', fontWeight: 500 }}>
+                <span className="user-name" style={{ fontSize: '0.88rem', color: 'var(--text-main)', fontWeight: 500 }}>
                   <UserIcon size={14} style={{ display: 'inline', marginRight: '4px', verticalAlign: 'middle' }} />
                   {user?.full_name}
                 </span>
