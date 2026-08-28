@@ -5,12 +5,21 @@ services:
     plan: free
     region: oregon
     dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
     envVars:
       - key: PORT
         value: 8000
       - key: SECRET_KEY
         generateValue: true
       - key: DATABASE_URL
-        value: sqlite:///./wishverse.db
+        fromDatabase:
+          name: wishverse-db
+          property: connectionString
       - key: BACKEND_CORS_ORIGINS
         value: "*"
+
+databases:
+  - name: wishverse-db
+    plan: free
+    region: oregon
+    postgresMajorVersion: 16

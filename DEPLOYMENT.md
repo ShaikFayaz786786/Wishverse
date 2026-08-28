@@ -6,7 +6,7 @@ Wishverse is fully configured for global accessibility. You can deploy it live o
 
 ## 🌐 Option 1: 1-Click Cloud Deployment on Render (Recommended)
 
-Render can build and run both the React frontend and FastAPI backend inside a single production container using the included [Dockerfile](file:///c:/Users/mabhu/OneDrive/Desktop/wishverse%20v1/Dockerfile).
+Render can build and run both the React frontend and FastAPI backend inside a single production container using the included [Dockerfile](./Dockerfile).
 
 ### Steps:
 1. **Push your code to GitHub**:
@@ -30,6 +30,10 @@ Render can build and run both the React frontend and FastAPI backend inside a si
    - Click **Create Web Service**.
 
 Render will give you a public global URL (e.g. `https://wishverse.onrender.com`). Any wish links created will automatically use this live domain!
+
+> **Don't skip `DATABASE_URL`.** Render's web services use an ephemeral filesystem, so SQLite data is lost on a restart or redeploy. Use Supabase or another managed Postgres service for any real deployment.
+>
+> **Easier option:** create a Render Blueprint from this repository's [render.yaml](./render.yaml). It provisions a managed Postgres database and wires `DATABASE_URL` and `SECRET_KEY` automatically.
 
 ---
 
@@ -78,7 +82,7 @@ ngrok http 5173
 To make your database persistent and globally accessible:
 1. Create a free project at [supabase.com](https://supabase.com).
 2. Open the **SQL Editor** in Supabase.
-3. Paste and run the migration script from [supabase/migrations/001_initial_schema.sql](file:///c:/Users/mabhu/OneDrive/Desktop/wishverse%20v1/supabase/migrations/001_initial_schema.sql).
+3. Paste and run the migration script from [supabase/migrations/001_initial_schema.sql](./supabase/migrations/001_initial_schema.sql).
 4. Copy the connection string from **Project Settings > Database > Connection URI**:
    `postgresql://postgres:[YOUR-PASSWORD]@db.[YOUR-PROJECT-REF].supabase.co:5432/postgres`
 5. Set this string as `DATABASE_URL` in your hosting environment variables.

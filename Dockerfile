@@ -24,13 +24,7 @@ ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PORT=8000
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install python dependencies
+# Install runtime Python dependencies only. psycopg2-binary ships precompiled wheels.
 COPY backend/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -40,8 +34,12 @@ COPY backend/app ./app
 # Copy built frontend assets into FastAPI static directory
 COPY --from=frontend-builder /app/frontend/dist ./app/static
 
-# Create persistent uploads directory
+# Create uploads directory. Configure external storage or a persistent disk for production media.
 RUN mkdir -p /app/uploads
+
+# Run the service with limited filesystem permissions.
+RUN useradd -m appuser && chown -R appuser:appuser /app
+USER appuser
 
 # Expose dynamic port
 EXPOSE 8000

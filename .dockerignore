@@ -11,4 +11,6 @@ backend/.pytest_cache
 backend/uploads
 backend/wishverse.db
 backend/*.db
+*.tsbuildinfo
+requirements-dev.txt
 .system_generated
