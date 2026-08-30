@@ -13,6 +13,7 @@ if db_url.startswith("sqlite"):
 engine = create_engine(
     db_url,
     connect_args=connect_args,
+    pool_pre_ping=True,
     echo=False
 )
 
@@ -29,5 +30,13 @@ def get_db():
         db.close()
 
 
-def init_db():
-    Base.metadata.create_all(bind=engine)
+def init_db(max_retries: int = 10, retry_delay: float = 2.0):
+    import time
+    for attempt in range(1, max_retries + 1):
+        try:
+            Base.metadata.create_all(bind=engine)
+            return
+        except Exception:
+            if attempt == max_retries:
+                raise
+            time.sleep(retry_delay)
