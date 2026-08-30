@@ -13,4 +13,3 @@ backend/wishverse.db
 backend/*.db
 *.tsbuildinfo
 requirements-dev.txt
-.system_generated

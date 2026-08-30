@@ -17,6 +17,9 @@ RUN npm run build
 # ------------------------------------------------------------------------------
 # Stage 2: Python Backend Runtime
 # ------------------------------------------------------------------------------
+# NOTE: requirements.txt uses psycopg2-binary, which ships precompiled wheels
+# with libpq statically bundled - no gcc/libpq-dev/libpq5 needed at all, at
+# build or runtime. Keep this in mind if you ever switch to plain psycopg2.
 FROM python:3.12-slim AS runtime
 WORKDIR /app
 
@@ -24,7 +27,8 @@ ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PORT=8000
 
-# Install runtime Python dependencies only. psycopg2-binary ships precompiled wheels.
+# Install python dependencies (runtime only - see requirements-dev.txt for
+# test-only deps like pytest, which are intentionally NOT installed here)
 COPY backend/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -34,10 +38,13 @@ COPY backend/app ./app
 # Copy built frontend assets into FastAPI static directory
 COPY --from=frontend-builder /app/frontend/dist ./app/static
 
-# Create uploads directory. Configure external storage or a persistent disk for production media.
+# Create uploads directory
+# NOTE: this directory is NOT persistent on Render's free/standard plans -
+# its contents are wiped on every deploy or restart. Attach a Render
+# persistent disk, or store media in Supabase Storage / S3, for real use.
 RUN mkdir -p /app/uploads
 
-# Run the service with limited filesystem permissions.
+# Run as a non-root user
 RUN useradd -m appuser && chown -R appuser:appuser /app
 USER appuser
 
