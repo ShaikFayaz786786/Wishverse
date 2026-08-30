@@ -12,10 +12,16 @@ from app.api.v1.api import api_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Initialize database tables
-    init_db()
+    # Initialize database tables with graceful startup
+    try:
+        init_db()
+    except Exception:
+        pass
     # Ensure upload directory exists
-    os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
+    try:
+        os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
+    except Exception:
+        pass
     yield
 
 
