@@ -10,6 +10,7 @@ import { SignupPage } from './pages/SignupPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { WishCreatorPage } from './pages/WishCreatorPage'
 import { PublicWishViewer } from './pages/PublicWishViewer'
+import { TemplatesPage } from './pages/TemplatesPage'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<LandingPage />} />
+              <Route path="/templates" element={<TemplatesPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/w/:slug" element={<PublicWishViewer />} />

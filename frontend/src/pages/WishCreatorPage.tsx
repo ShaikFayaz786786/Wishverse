@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { Wish, WishFormData, MediaItem } from '../types'
+import { useParams, useLocation, useSearchParams, Link } from 'react-router-dom'
+import { Wish, WishFormData, MediaItem, WishTemplate } from '../types'
 import { OCCASIONS } from '../styles/themes'
+import { WISH_TEMPLATES } from '../data/templates'
 import { ThemeSelector } from '../components/ThemeSelector'
 import { AnimationSelector } from '../components/AnimationSelector'
 import { MediaUploader } from '../components/MediaUploader'
 import { WishPreviewCard } from '../components/WishPreviewCard'
+import { TemplatePickerModal } from '../components/TemplatePickerModal'
 import { createWish, getWish, updateWish, publishWish } from '../services/api'
 import { 
   Sparkles, 
@@ -19,11 +21,14 @@ import {
   Palette, 
   FileText, 
   Image as ImageIcon,
-  PartyPopper
+  PartyPopper,
+  Wand2
 } from 'lucide-react'
 
 export const WishCreatorPage: React.FC = () => {
   const { id } = useParams<{ id?: string }>()
+  const location = useLocation()
+  const [searchParams] = useSearchParams()
   const isEditing = Boolean(id)
 
   const [activeTab, setActiveTab] = useState<'editor' | 'preview'>('editor')
@@ -31,6 +36,7 @@ export const WishCreatorPage: React.FC = () => {
   const [isPublishing, setIsPublishing] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
+  const [isTemplateModalOpen, setIsTemplateModalOpen] = useState<boolean>(false)
 
   const [createdWish, setCreatedWish] = useState<Wish | null>(null)
   const [mediaItems, setMediaItems] = useState<MediaItem[]>([])
@@ -45,6 +51,33 @@ export const WishCreatorPage: React.FC = () => {
     theme: 'magical-starlight',
     animation_preset: 'floating-sparkles',
   })
+
+  // Load template from query param or location state if creating a new wish
+  useEffect(() => {
+    if (!id) {
+      const templateState = (location.state as { template?: WishTemplate })?.template
+      const templateIdFromUrl = searchParams.get('template')
+
+      const matchedTemplate =
+        templateState ||
+        (templateIdFromUrl
+          ? WISH_TEMPLATES.find((t) => t.id === templateIdFromUrl)
+          : null)
+
+      if (matchedTemplate) {
+        setFormData({
+          title: matchedTemplate.title,
+          recipient_name: matchedTemplate.recipientName,
+          sender_name: matchedTemplate.senderName,
+          message: matchedTemplate.message,
+          occasion: matchedTemplate.occasion,
+          theme: matchedTemplate.theme,
+          animation_preset: matchedTemplate.animationPreset,
+        })
+        setSuccessMessage(`Loaded template: "${matchedTemplate.name}". Customize it below!`)
+      }
+    }
+  }, [id, location.state, searchParams])
 
   // Load existing wish if in edit mode
   useEffect(() => {
@@ -68,6 +101,20 @@ export const WishCreatorPage: React.FC = () => {
         })
     }
   }, [id])
+
+  const handleApplyTemplate = (tpl: WishTemplate) => {
+    setFormData((prev) => ({
+      ...prev,
+      title: tpl.title,
+      recipient_name: tpl.recipientName,
+      sender_name: tpl.senderName,
+      message: tpl.message,
+      occasion: tpl.occasion,
+      theme: tpl.theme,
+      animation_preset: tpl.animationPreset,
+    }))
+    setSuccessMessage(`Applied template: "${tpl.name}". You can now edit the details!`)
+  }
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -154,7 +201,21 @@ export const WishCreatorPage: React.FC = () => {
           </h1>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.6rem' }}>
+        <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
+          <button
+            type="button"
+            onClick={() => setIsTemplateModalOpen(true)}
+            className="btn btn-outline"
+            style={{
+              background: 'linear-gradient(135deg, rgba(192, 132, 252, 0.15) 0%, rgba(56, 189, 248, 0.15) 100%)',
+              borderColor: 'rgba(192, 132, 252, 0.5)',
+              color: '#e9d5ff',
+            }}
+          >
+            <Sparkles size={16} color="#c084fc" />
+            <span>Browse Templates</span>
+          </button>
+
           <button
             type="button"
             onClick={() => setActiveTab(activeTab === 'editor' ? 'preview' : 'editor')}
@@ -279,9 +340,26 @@ export const WishCreatorPage: React.FC = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             {/* Wish Details Section */}
             <div className="glass-card" style={{ padding: '2rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                <FileText size={20} color="#c084fc" />
-                <h2 style={{ fontSize: '1.25rem' }}>1. Wish Details</h2>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <FileText size={20} color="#c084fc" />
+                  <h2 style={{ fontSize: '1.25rem' }}>1. Wish Details</h2>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsTemplateModalOpen(true)}
+                  className="btn btn-outline btn-sm"
+                  style={{
+                    fontSize: '0.78rem',
+                    background: 'rgba(192, 132, 252, 0.1)',
+                    borderColor: 'rgba(192, 132, 252, 0.3)',
+                    color: '#c084fc',
+                  }}
+                >
+                  <Wand2 size={13} />
+                  <span>Choose from Templates</span>
+                </button>
               </div>
 
               <div className="form-group">
@@ -424,6 +502,13 @@ export const WishCreatorPage: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Interactive Template Selector Modal */}
+      <TemplatePickerModal
+        isOpen={isTemplateModalOpen}
+        onClose={() => setIsTemplateModalOpen(false)}
+        onSelectTemplate={handleApplyTemplate}
+      />
     </div>
   )
 }

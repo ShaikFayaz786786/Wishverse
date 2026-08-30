@@ -102,10 +102,17 @@ export const DashboardPage: React.FC = () => {
           </p>
         </div>
 
-        <Link to="/create" className="btn btn-primary btn-lg">
-          <PlusCircle size={18} />
-          <span>Create New Wish</span>
-        </Link>
+        <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
+          <Link to="/templates" className="btn btn-secondary btn-lg">
+            <Sparkles size={18} color="#c084fc" />
+            <span>Templates</span>
+          </Link>
+
+          <Link to="/create" className="btn btn-primary btn-lg">
+            <PlusCircle size={18} />
+            <span>Create New Wish</span>
+          </Link>
+        </div>
       </div>
 
       {/* Stats Cards */}
@@ -228,10 +235,16 @@ export const DashboardPage: React.FC = () => {
               : 'Create your first personalized digital wish with photos, audio, and custom animations!'}
           </p>
           {!searchQuery && filter === 'ALL' && (
-            <Link to="/create" className="btn btn-primary" style={{ marginTop: '0.5rem' }}>
-              <PlusCircle size={16} />
-              <span>Create Your First Wish</span>
-            </Link>
+            <div style={{ display: 'flex', gap: '0.6rem', marginTop: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+              <Link to="/templates" className="btn btn-secondary">
+                <Sparkles size={16} color="#c084fc" />
+                <span>Start from a Template</span>
+              </Link>
+              <Link to="/create" className="btn btn-primary">
+                <PlusCircle size={16} />
+                <span>Create from Scratch</span>
+              </Link>
+            </div>
           )}
         </div>
       ) : (

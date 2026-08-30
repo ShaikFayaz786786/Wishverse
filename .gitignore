@@ -48,7 +48,8 @@ out/
 *.db
 *.sqlite-journal
 *.dump
-data/
+/data/
+!frontend/src/data/
 db/
 *.rdb
 

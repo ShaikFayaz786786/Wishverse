@@ -23,6 +23,11 @@ export const Navbar: React.FC = () => {
         </Link>
 
         <nav className="nav-actions">
+          <Link to="/templates" className="btn btn-outline btn-sm" style={{ borderColor: 'rgba(192, 132, 252, 0.35)', color: '#e9d5ff' }}>
+            <Sparkles size={15} color="#c084fc" />
+            <span>Templates</span>
+          </Link>
+
           {isAuthenticated ? (
             <>
               <Link to="/dashboard" className="btn btn-secondary btn-sm">

@@ -174,3 +174,161 @@
   -webkit-text-fill-color: transparent;
   animation: shimmer 4s linear infinite;
 }
+
+/* Shooting Stars */
+@keyframes shootingStar {
+  0% {
+    transform: translateX(120px) translateY(-50px) rotate(-35deg) scale(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  60% {
+    transform: translateX(-300px) translateY(250px) rotate(-35deg) scale(1.2);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateX(-500px) translateY(400px) rotate(-35deg) scale(0.2);
+    opacity: 0;
+  }
+}
+
+.particle-shooting-star {
+  animation: shootingStar 4.5s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  filter: drop-shadow(0 0 12px var(--theme-accent-glow, rgba(34, 211, 238, 0.8)));
+}
+
+/* Cherry Blossom Petals Flutter */
+@keyframes flutterPetal {
+  0% {
+    transform: translateY(-10vh) translateX(0) rotate(0deg) scale(0.6);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  40% {
+    transform: translateY(40vh) translateX(30px) rotate(120deg) scale(1);
+  }
+  70% {
+    transform: translateY(75vh) translateX(-25px) rotate(240deg) scale(0.9);
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(110vh) translateX(15px) rotate(360deg) scale(0.6);
+    opacity: 0;
+  }
+}
+
+.particle-petal {
+  animation: flutterPetal 10s ease-in-out infinite;
+  color: var(--theme-accent, #f472b6);
+  filter: drop-shadow(0 0 6px var(--theme-accent-glow, rgba(244, 114, 182, 0.5)));
+}
+
+/* Sky Lanterns Rising */
+@keyframes riseLantern {
+  0% {
+    transform: translateY(110vh) translateX(0) scale(0.7);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.95;
+  }
+  50% {
+    transform: translateY(55vh) translateX(-20px) scale(1);
+  }
+  80% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-15vh) translateX(25px) scale(0.8);
+    opacity: 0;
+  }
+}
+
+.particle-lantern {
+  animation: riseLantern 14s ease-in-out infinite;
+  filter: drop-shadow(0 0 14px rgba(251, 191, 36, 0.8));
+}
+
+/* Snowfall Magic */
+@keyframes fallSnow {
+  0% {
+    transform: translateY(-10vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.95;
+  }
+  50% {
+    transform: translateY(50vh) translateX(15px) rotate(180deg);
+  }
+  85% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(110vh) translateX(-15px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.particle-snow {
+  animation: fallSnow 9s linear infinite;
+  color: #ffffff;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+}
+
+/* Firefly Dance */
+@keyframes danceFirefly {
+  0%, 100% {
+    transform: translate(0, 0) scale(0.8);
+    opacity: 0.2;
+  }
+  25% {
+    transform: translate(25px, -30px) scale(1.2);
+    opacity: 0.95;
+  }
+  50% {
+    transform: translate(-20px, -55px) scale(0.6);
+    opacity: 0.3;
+  }
+  75% {
+    transform: translate(35px, -20px) scale(1.1);
+    opacity: 0.9;
+  }
+}
+
+.particle-firefly {
+  animation: danceFirefly 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px var(--theme-accent-glow, rgba(250, 204, 21, 0.9)));
+}
+
+/* Champagne Bubbles Rising */
+@keyframes riseBubble {
+  0% {
+    transform: translateY(110vh) translateX(0) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.9;
+  }
+  60% {
+    transform: translateY(45vh) translateX(12px) scale(1);
+  }
+  85% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-10vh) translateX(-10px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.particle-bubble {
+  animation: riseBubble 8s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px var(--theme-accent-glow, rgba(250, 204, 21, 0.7)));
+}

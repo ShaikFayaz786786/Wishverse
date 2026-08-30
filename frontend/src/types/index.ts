@@ -86,3 +86,28 @@ export interface AnimationDefinition {
   description: string
   icon: string
 }
+
+export type TemplateCategory =
+  | 'All'
+  | 'Birthday'
+  | 'Love & Romance'
+  | 'Weddings & Anniversaries'
+  | 'Career & Milestones'
+  | 'Holidays & Festivals'
+  | 'Care & Gratitude'
+
+export interface WishTemplate {
+  id: string
+  name: string
+  category: TemplateCategory
+  occasion: string
+  title: string
+  recipientName: string
+  senderName: string
+  message: string
+  theme: string
+  animationPreset: string
+  badge: string
+  icon: string
+  tags: string[]
+}

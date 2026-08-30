@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Sparkles, Share2, Eye, ShieldCheck, ArrowRight, Wand2 } from 'lucide-react'
+import { Sparkles, Share2, Eye, ShieldCheck, ArrowRight, Palette } from 'lucide-react'
 import { WishPreviewCard } from '../components/WishPreviewCard'
+import { WISH_TEMPLATES } from '../data/templates'
 import { checkBackendHealth } from '../services/api'
 import { HealthStatus } from '../types'
 
@@ -14,6 +15,8 @@ export const LandingPage: React.FC = () => {
       .then(setBackendHealth)
       .catch(() => setBackendHealth(null))
   }, [])
+
+  const featuredTemplates = WISH_TEMPLATES.slice(0, 3)
 
   return (
     <div style={{ position: 'relative', overflow: 'hidden' }}>
@@ -29,7 +32,7 @@ export const LandingPage: React.FC = () => {
         </h1>
 
         <p style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: '#94a3b8', maxWidth: '680px', margin: '0 auto 2.5rem', lineHeight: 1.6 }}>
-          Turn heartfelt moments into unforgettable interactive experiences. Add personalized messages, photos, videos, and dynamic themes—shareable with an instant, zero-login link.
+          Turn heartfelt moments into unforgettable interactive experiences. Pick from 24+ pre-built templates, add photos & videos, and share instantly with zero receiver friction.
         </p>
 
         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3.5rem' }}>
@@ -37,19 +40,20 @@ export const LandingPage: React.FC = () => {
             <span>Create a Wish Now</span>
             <ArrowRight size={18} />
           </Link>
-          <Link to="/signup" className="btn btn-secondary btn-lg">
-            <span>Sign Up Free</span>
+          <Link to="/templates" className="btn btn-secondary btn-lg">
+            <Sparkles size={18} color="#c084fc" />
+            <span>Explore 24+ Templates</span>
           </Link>
         </div>
 
         {/* Live Interactive Hero Demo Card */}
         <div style={{ maxWidth: '780px', margin: '0 auto', textAlign: 'left' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', padding: '0 0.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', padding: '0 0.5rem', flexWrap: 'wrap', gap: '0.5rem' }}>
             <span style={{ fontSize: '0.85rem', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               <Eye size={14} color="#c084fc" /> Live Interactive Preview Demo:
             </span>
-            <div style={{ display: 'flex', gap: '0.4rem' }}>
-              {['magical-starlight', 'sunset-glow', 'neon-cyberpunk', 'romantic-blossom', 'golden-elegance'].map((th) => (
+            <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+              {['magical-starlight', 'aurora-borealis', 'cherry-blossom', 'sunset-glow', 'neon-cyberpunk', 'golden-elegance'].map((th) => (
                 <button
                   key={th}
                   onClick={() => setDemoTheme(th)}
@@ -83,6 +87,69 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Featured Templates Showcase Section */}
+      <section style={{ padding: '4rem 0', borderTop: '1px solid var(--border-subtle)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#c084fc', fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
+              <Sparkles size={14} /> Ready-Made Inspiration
+            </div>
+            <h2 style={{ fontSize: '2rem' }}>Featured Celebration Templates</h2>
+            <p style={{ color: '#94a3b8', fontSize: '0.95rem' }}>Jumpstart your wish with handcrafted messages and matching themes.</p>
+          </div>
+
+          <Link to="/templates" className="btn btn-outline btn-sm">
+            <span>View All 24+ Templates</span>
+            <ArrowRight size={15} />
+          </Link>
+        </div>
+
+        <div className="grid-cards">
+          {featuredTemplates.map((tpl) => (
+            <div
+              key={tpl.id}
+              className="glass-card"
+              style={{
+                padding: '1.75rem',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                gap: '1.25rem',
+              }}
+            >
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', background: 'rgba(192, 132, 252, 0.15)', color: '#c084fc', padding: '0.2rem 0.55rem', borderRadius: '99px' }}>
+                    {tpl.badge}
+                  </span>
+                  <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>{tpl.occasion}</span>
+                </div>
+
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.5rem', color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <span>{tpl.icon}</span>
+                  <span>{tpl.name}</span>
+                </h3>
+
+                <p style={{ fontSize: '0.84rem', color: '#94a3b8', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                  {tpl.message}
+                </p>
+              </div>
+
+              <div style={{ paddingTop: '1rem', borderTop: '1px solid var(--border-subtle)' }}>
+                <Link
+                  to={`/create?template=${encodeURIComponent(tpl.id)}`}
+                  className="btn btn-primary btn-sm"
+                  style={{ width: '100%', justifyContent: 'center' }}
+                >
+                  <span>Use This Template</span>
+                  <ArrowRight size={14} />
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Features Grid */}
       <section style={{ padding: '4rem 0', borderTop: '1px solid var(--border-subtle)' }}>
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
@@ -103,11 +170,11 @@ export const LandingPage: React.FC = () => {
 
           <div className="glass-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <div style={{ width: '45px', height: '45px', borderRadius: '12px', background: 'rgba(236, 72, 153, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#f43f5e' }}>
-              <Wand2 size={22} />
+              <Palette size={22} />
             </div>
-            <h3 style={{ fontSize: '1.25rem' }}>6 Magical Themes</h3>
+            <h3 style={{ fontSize: '1.25rem' }}>14 Visual Themes & 12 Animations</h3>
             <p style={{ color: '#94a3b8', fontSize: '0.92rem', lineHeight: 1.6 }}>
-              From Cosmic Starlight to Golden Elegance, select handcrafted visual identities with ambient particle effects.
+              From Sakura Petals and Aurora Borealis to Golden Elegance, select handcrafted visual identities with dynamic ambient particles.
             </p>
           </div>
 
@@ -131,8 +198,8 @@ export const LandingPage: React.FC = () => {
             <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'var(--primary-gradient)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '1.2rem' }}>
               1
             </div>
-            <h4 style={{ fontSize: '1.1rem' }}>Personalize Message</h4>
-            <p style={{ color: '#94a3b8', fontSize: '0.88rem' }}>Write your heartfelt note, set the occasion, and add the recipient's name.</p>
+            <h4 style={{ fontSize: '1.1rem' }}>Pick or Write Message</h4>
+            <p style={{ color: '#94a3b8', fontSize: '0.88rem' }}>Choose from 24+ rich templates or write your heartfelt custom note.</p>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
@@ -140,7 +207,7 @@ export const LandingPage: React.FC = () => {
               2
             </div>
             <h4 style={{ fontSize: '1.1rem' }}>Add Photos & Style</h4>
-            <p style={{ color: '#94a3b8', fontSize: '0.88rem' }}>Upload memorable photos/videos and choose from polished themes and animations.</p>
+            <p style={{ color: '#94a3b8', fontSize: '0.88rem' }}>Upload memorable photos/videos and choose from 14 themes and 12 animation presets.</p>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>

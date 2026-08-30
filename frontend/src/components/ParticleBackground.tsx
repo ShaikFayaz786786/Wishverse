@@ -6,14 +6,13 @@ interface ParticleBackgroundProps {
 
 export const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ animationPreset }) => {
   const particles = useMemo(() => {
-    return Array.from({ length: 18 }).map((_, i) => ({
+    return Array.from({ length: 20 }).map((_, i) => ({
       id: i,
-      left: `${(i * 5.5 + Math.random() * 5) % 96}%`,
+      left: `${(i * 5.2 + Math.random() * 4) % 96}%`,
       top: `${Math.random() * 90}%`,
-      delay: `${(i * 0.45).toFixed(2)}s`,
+      delay: `${(i * 0.4).toFixed(2)}s`,
       duration: `${(6 + (i % 5) * 1.5).toFixed(1)}s`,
       size: `${14 + (i % 4) * 6}px`,
-      colorOpacity: 0.5 + (i % 5) * 0.1,
     }))
   }, [])
 
@@ -36,10 +35,11 @@ export const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ animatio
     return (
       <div className="animation-particles-container">
         {[
-          { top: '25%', left: '20%', delay: '0s' },
-          { top: '35%', left: '75%', delay: '1.2s' },
-          { top: '65%', left: '30%', delay: '2.4s' },
+          { top: '22%', left: '20%', delay: '0s' },
+          { top: '32%', left: '75%', delay: '1.2s' },
+          { top: '65%', left: '28%', delay: '2.4s' },
           { top: '55%', left: '80%', delay: '0.8s' },
+          { top: '15%', left: '50%', delay: '1.8s' },
         ].map((fw, idx) => (
           <div
             key={idx}
@@ -58,6 +58,33 @@ export const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ animatio
     )
   }
 
+  if (animationPreset === 'shooting-stars') {
+    return (
+      <div className="animation-particles-container">
+        {[
+          { top: '12%', right: '10%', delay: '0s', duration: '4s' },
+          { top: '28%', right: '25%', delay: '1.5s', duration: '4.8s' },
+          { top: '48%', right: '5%', delay: '3s', duration: '3.8s' },
+          { top: '65%', right: '35%', delay: '2.2s', duration: '5.2s' },
+        ].map((star, idx) => (
+          <div
+            key={idx}
+            className="particle-item particle-shooting-star"
+            style={{
+              top: star.top,
+              right: star.right,
+              animationDelay: star.delay,
+              animationDuration: star.duration,
+              fontSize: '22px',
+            }}
+          >
+            🌠
+          </div>
+        ))}
+      </div>
+    )
+  }
+
   const renderSymbol = () => {
     switch (animationPreset) {
       case 'gentle-hearts':
@@ -66,6 +93,16 @@ export const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ animatio
         return '🎈'
       case 'confetti-cascade':
         return '🎉'
+      case 'cherry-petals':
+        return '🌸'
+      case 'floating-lanterns':
+        return '🏮'
+      case 'snowfall-magic':
+        return '❄️'
+      case 'firefly-dance':
+        return '✨'
+      case 'champagne-bubbles':
+        return '🫧'
       case 'floating-sparkles':
       default:
         return '✨'
@@ -80,6 +117,16 @@ export const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ animatio
         return 'particle-balloon'
       case 'confetti-cascade':
         return 'particle-sparkle'
+      case 'cherry-petals':
+        return 'particle-petal'
+      case 'floating-lanterns':
+        return 'particle-lantern'
+      case 'snowfall-magic':
+        return 'particle-snow'
+      case 'firefly-dance':
+        return 'particle-firefly'
+      case 'champagne-bubbles':
+        return 'particle-bubble'
       case 'floating-sparkles':
       default:
         return 'particle-sparkle'
